@@ -38,13 +38,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Set<Role> getRolesByIds(List<Long> ids) {
-        Set<Role> roles = new HashSet<>();
         if (ids == null || ids.isEmpty()) {
-            return roles;
+            return Set.of();
         }
-        for (Long id : ids) {
-            roleRepository.findById(id).ifPresent(roles::add);
+        var uniqueIds = new HashSet<>(ids);
+        List<Role> roles = roleRepository.findAllById(uniqueIds);
+        if (roles.size() != uniqueIds.size()) {
+            throw new IllegalArgumentException("One or more role IDs are invalid");
         }
-        return roles;
+        return new HashSet<>(roles);
     }
 }

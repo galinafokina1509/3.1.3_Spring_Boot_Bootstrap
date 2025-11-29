@@ -52,8 +52,11 @@ public class UserServiceImpl implements UserService {
         if (rawPassword == null || rawPassword.isBlank()) {
             throw new IllegalArgumentException("Password must be provided");
         }
+        if (roleIds == null || roleIds.isEmpty()) {
+            throw new IllegalArgumentException("At least one role must be specified");
+        }
         Set<Role> roles = roleService.getRolesByIds(roleIds);
-        user.setRoles(roles == null ? new HashSet<>() : roles);
+        user.setRoles(roles);
         user.setPassword(bCryptPasswordEncoder.encode(rawPassword));
         userRepository.save(user);
     }
@@ -66,10 +69,11 @@ public class UserServiceImpl implements UserService {
         existing.setAge(user.getAge());
         existing.setEmail(user.getEmail());
 
-        if (roleIds != null) {
-            Set<Role> roles = roleService.getRolesByIds(roleIds);
-            existing.setRoles(roles);
+        if (roleIds == null || roleIds.isEmpty()) {
+            throw new IllegalArgumentException("At least one role must be specified");
         }
+        Set<Role> roles = roleService.getRolesByIds(roleIds);
+        existing.setRoles(roles);
 
         if (rawPassword != null && !rawPassword.isBlank()) {
             existing.setPassword(bCryptPasswordEncoder.encode(rawPassword));

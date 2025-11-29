@@ -12,7 +12,7 @@ import preproject.spring_boot_security.model.User;
 public class UserController {
 
     @GetMapping
-    public String userPage(@AuthenticationPrincipal User currentUser, Model model) {
+    public String showUserPage(@AuthenticationPrincipal User currentUser, Model model) {
         model.addAttribute("user", currentUser);
         return "user";
     }

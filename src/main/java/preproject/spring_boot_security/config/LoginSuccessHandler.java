@@ -14,12 +14,12 @@ import java.util.Set;
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";
-    private static final String ROLE_USER = "ROLE_USER";
+    private final String ROLE_ADMIN = "ROLE_ADMIN";
+    private final String ROLE_USER = "ROLE_USER";
 
-    private static final String ADMIN_URL = "/admin";
-    private static final String USER_URL = "/user";
-    private static final String DEFAULT_URL = "/";
+    private final String ADMIN_URL = "/admin";
+    private final String USER_URL = "/user";
+    private final String DEFAULT_URL = "/";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
